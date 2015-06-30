@@ -9,7 +9,7 @@
 
 var app = require('http').createServer(handler);
 
-var io = require('socket.io').listen(app);
+var io = require('socket.io')(app);
 
 var fs = require('fs');
 
@@ -75,7 +75,7 @@ function handler (req, res) {
 
   }
 
-  fs.readFile('Html1.html',    // load html file
+  fs.readFile(__dirname + '/Html1.html',    // load html file
 
   function (err, data) {
 
