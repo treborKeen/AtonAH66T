@@ -3,11 +3,11 @@
     
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width initial-scale=1.5, user-scalable=yes">
+        <meta name="viewport" content="width=500, initial-scale = 1  user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <title>BeagleBone Black AH66</title>
-        <link rel="stylesheet" type="text/css" href="./styles.css">
+        <link rel="stylesheet" type="text/css" href="styles.css">
         <script src="/socket.io/socket.io.js"> </script>
        <!-- <script type="text/javascript" src="./ah66tserver.js"></script> -->
      
@@ -19,17 +19,18 @@
 
             socket.on('update', function(tuners,zData) {
 
-                for(i=1;i<13;i++){
+                tuner1.value = tuners[0].trim()+'0';
+                tuner2.value = tuners[1].trim()+'0';
+                for(i=1;i<8;i++){
                     
                     (document.getElementById('slider'+i)).value=zData[i][1];
                     
                     (document.getElementById('selectAudio'+i)).value=zData[i][0];
                    
                 }
-                  
-                tuner1.value = tuners[0].trim()+'0';
-                tuner2.value = tuners[1].trim()+'0';
+               
             });
+            
             // Send data through socket
             function zvol(zone, value) {
 
@@ -83,7 +84,7 @@
                         <option value="A3">Marantz</option>
                         <option value="R2">Radio2</option>
                     </select>         	
-                    <input id="slider1"  type="range" value=0 min="0" max="100"   onInput="zvol(1,value);" />
+                    <input id="slider1"  name = "slider1" type="range" value=0 min="0" max="100"   onInput="zvol(1,value);" />
                     <label for="slider1">Master Bed</label>
                 </div>
                 <div >
@@ -96,7 +97,7 @@
                         <option value="R2">Radio2</option>
                     </select>
                     
-                    <input id="slider2" type="range" name="slider" value="0"
+                    <input id="slider2" type="range" name="slider2" value="0"
                     min="0" max="100" data-highlight="false"  onInput="zvol(2,value);">
                     <label for="slider2">Front Porch</label>
                 </div>
@@ -109,7 +110,7 @@
                         <option value="A3">Marantz</option>
                         <option value="R2">Radio2</option>
                     </select>
-                    <input id="slider3" type="range" name="slider" value="0"
+                    <input id="slider3" type="range" name="slider3" value="0"
                     min="0" max="100" data-highlight="false"  onInput="zvol(3,value);">
                     <label for="slider3">Back Deck</label>
                 </div>
@@ -122,7 +123,7 @@
                         <option value="A3">Marantz</option>
                         <option value="R2">Radio2</option>
                     </select>
-                    <input id="slider4" type="range" name="slider" value="0"
+                    <input id="slider4" type="range" name="slider4" value="0"
                     min="0" max="100" data-highlight="false"  onInput="zvol(4,value);">
                     <label for="slider4">Kitchen</label>
                 </div>
@@ -135,7 +136,7 @@
                         <option value="A3">Marantz</option>
                         <option value="R2">Radio2</option>
                     </select>
-                    <input id="slider5" type="range" name="slider" value="0"
+                    <input id="slider5" type="range" name="slider5" value="0"
                     min="0" max="100" data-highlight="false"  onInput="zvol(5,value);">
                     <label for="slider5">Grt Rm(CD)</label>
                 </div>
@@ -148,7 +149,7 @@
                         <option value="A3">Marantz</option>
                         <option value="R2">Radio2</option>
                     </select>
-                    <input id="slider6" type="range" name="slider" value="0"
+                    <input id="slider6" type="range" name="slider6" value="0"
                     min="0" max="100" data-highlight="false"  onInput="zvol(6,value);">
                     <label for="slider6">Master Bath</label>
                 </div>
@@ -161,7 +162,7 @@
                         <option value="A3">Marantz</option>
                         <option value="R2">Radio2</option>
                     </select>
-                    <input id="slider7" type="range" name="slider" value="0"
+                    <input id="slider7" type="range" name="slider7" value="0"
                     min="0" max="100" data-highlight="false"  onInput="zvol(7,value);">
                     <label for="slider7">Basement</label>
                 </div>

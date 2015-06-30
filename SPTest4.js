@@ -9,7 +9,7 @@
 
 var app = require('http').createServer(handler);
 
-var io = require('socket.io')(app);
+var io = require('socket.io').listen(app);
 
 var fs = require('fs');
 
@@ -46,9 +46,9 @@ console.log('Server running on: http://' + getIPAddress() + ':8888');
 
 
 function processData(data) {
-    console.log('data received: ' + data.toString());
+    //.log('data received: ' + data.toString());
     var dataSplit = data.split(',');
-    console.log(dataSplit);
+    //console.log(dataSplit);
     if (dataSplit[1] == 'ZQRY')
       zData[dataSplit[2]] = dataSplit.slice(3);
    
@@ -75,7 +75,7 @@ function handler (req, res) {
 
   }
 
-  fs.readFile(__dirname + '/Html1.html',    // load html file
+  fs.readFile('Html1.html',    // load html file
 
   function (err, data) {
 
@@ -100,25 +100,29 @@ function handler (req, res) {
 io.sockets.on('connection', function (socket) {
 
   // listen to sockets
-  // Get current vol levels
- 
-  for(i=1;i<13;i++){
-    sp.write('&AH66,ZQRY,'+i+',?\r')}
- 
+  // Get current tuner and zone data
   sp.write('&AH66,R1,TUNE,?\r')
   sp.write('&AH66,R2,TUNE,?\r')
+  
+  for(i=1;i<8;i++){
+    sp.write('&AH66,ZQRY,'+i+',?\r')}
+ 
+  
   
   setTimeout(function() {
       
       console.log('tuners are :' + tuners);
-      console.log('zone data :' +zData);
+      //console.log('zone data :' +zData);
       //console.log('zData 1,1 :  '+zData[1][1]);
+      //console.log('zData 2,1 :  '+zData[2][1]);
+      //console.log('zData 3,1 :  '+zData[3][1]);
       socket.emit('update', tuners, zData);
     }, 500 );
     
   socket.on('zvol', function (zone, data) {
 
     console.log('zone: '+zone+'  level: '+data);
+    //[zone][1]=data;
     sp.write("&AH66,VOL,"+zone+','+data+"\r");
   });
   
