@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width initial-scale=1.5, user-scalable=yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <title>BeagleBone Black AH66</title>
+        <link rel="stylesheet" type="text/css" href="./styles.css">
+        <script src="/socket.io/socket.io.js"> </script>
+       <!-- <script type="text/javascript" src="./ah66tserver.js"></script> -->
+     
+        <!-- Code for socket.io and device orientation handling -->
+      <script>
+            var socket = io.connect();
+
+
+            socket.on('update', function(tuners,zData) {
+
+                for(i=1;i<13;i++){
+                    
+                    (document.getElementById('slider'+i)).value=zData[i][1];
+                    
+                    (document.getElementById('selectAudio'+i)).value=zData[i][0];
+                   
+                }
+                  
+                tuner1.value = tuners[0].trim()+'0';
+                tuner2.value = tuners[1].trim()+'0';
+            });
+            // Send data through socket
+            function zvol(zone, value) {
+
+                socket.emit('zvol', zone, value);
+
+            }
+
+
+
+            function zonePow(zone, value) {
+
+                socket.emit('zonePow', zone, value);
+
+            }
+
+            function zoneSelect(zone, value) {
+
+                socket.emit('zoneSelect', zone, value);
+
+            }
+            function tune(tuner, value) {
+                console.log('emitting'+tuner+value)
+
+                socket.emit('tune', tuner, value);
+
+            }
+            function page(value) {
+
+                socket.emit('page',value);
+
+            }
+            
+            function sysOff() {
+
+                socket.emit('sysOff');
+
+            }
+        </script>
+    </head>
+    
+    <body>
+        <!-- Home -->
+            </div>
+                <div>
+                    <select id="selectAudio1" name="selectAudio1" 
+                    onChange="zoneSelect(1,value);">
+                        <option value="A0">Off</option>
+                        <option value="R1">Radio</option>
+                        <option value="A1">Airplay</option>
+                        <option value="A2">iPort</option>
+                        <option value="A3">Marantz</option>
+                        <option value="R2">Radio2</option>
+                    </select>         	
+                    <input id="slider1"  type="range" value=0 min="0" max="100"   onInput="zvol(1,value);" />
+                    <label for="slider1">Master Bed</label>
+                </div>
+                <div >
+                		<select id="selectAudio2" name="selectAudio2"  onChange="zoneSelect(2,value);">
+                        <option value="A0">Off</option>
+                        <option value="R1">Radio</option>
+                        <option value="A1">Airplay</option>
+                         <option value="A2">iPort</option>
+                        <option value="A3">Marantz</option>
+                        <option value="R2">Radio2</option>
+                    </select>
+                    
+                    <input id="slider2" type="range" name="slider" value="0"
+                    min="0" max="100" data-highlight="false"  onInput="zvol(2,value);">
+                    <label for="slider2">Front Porch</label>
+                </div>
+                <div >
+                    <select id="selectAudio3" name="selectAudio3"  onChange="zoneSelect(3,value);">
+                         <option value="A0">Off</option>
+                        <option value="R1">Radio</option>
+                        <option value="A1">Airplay</option>
+                         <option value="A2">iPort</option>
+                        <option value="A3">Marantz</option>
+                        <option value="R2">Radio2</option>
+                    </select>
+                    <input id="slider3" type="range" name="slider" value="0"
+                    min="0" max="100" data-highlight="false"  onInput="zvol(3,value);">
+                    <label for="slider3">Back Deck</label>
+                </div>
+                <div >
+                	<select id="selectAudio4" name="selectAudio4"  onChange="zoneSelect(4,value);">
+                        <option value="A0">Off</option>
+                        <option value="R1">Radio</option>
+                        <option value="A1">Airplay</option>
+                         <option value="A2">iPort</option>
+                        <option value="A3">Marantz</option>
+                        <option value="R2">Radio2</option>
+                    </select>
+                    <input id="slider4" type="range" name="slider" value="0"
+                    min="0" max="100" data-highlight="false"  onInput="zvol(4,value);">
+                    <label for="slider4">Kitchen</label>
+                </div>
+                <div >
+                    <select id="selectAudio5" name="selectAudio5"  onChange="zoneSelect(5,value);">
+                         <option value="A0">Off</option>
+                        <option value="R1">Radio</option>
+                        <option value="A1">Airplay</option>
+                         <option value="A2">iPort</option>
+                        <option value="A3">Marantz</option>
+                        <option value="R2">Radio2</option>
+                    </select>
+                    <input id="slider5" type="range" name="slider" value="0"
+                    min="0" max="100" data-highlight="false"  onInput="zvol(5,value);">
+                    <label for="slider5">Grt Rm(CD)</label>
+                </div>
+                <div >
+                    <select id="selectAudio6" name="selectAudio6"  onChange="zoneSelect(6,value);">
+                         <option value="A0">Off</option>
+                        <option value="R1">Radio</option>
+                        <option value="A1">Airplay</option>
+                         <option value="A2">iPort</option>
+                        <option value="A3">Marantz</option>
+                        <option value="R2">Radio2</option>
+                    </select>
+                    <input id="slider6" type="range" name="slider" value="0"
+                    min="0" max="100" data-highlight="false"  onInput="zvol(6,value);">
+                    <label for="slider6">Master Bath</label>
+                </div>
+                <div >
+                    <select id="selectAudio7" name="selectAudio7"  onChange="zoneSelect(7,value);">
+                         <option value="A0">Off</option>
+                        <option value="R1">Radio</option>
+                        <option value="A1">Airplay</option>
+                         <option value="A2">iPort</option>
+                        <option value="A3">Marantz</option>
+                        <option value="R2">Radio2</option>
+                    </select>
+                    <input id="slider7" type="range" name="slider" value="0"
+                    min="0" max="100" data-highlight="false"  onInput="zvol(7,value);">
+                    <label for="slider7">Basement</label>
+                </div>
+                
+                <div >
+                    <select id="tuner1" name="tuner1"  onChange="tune('R1',value);">
+                        <option value="9630">96.3</option>
+                        <option value="9950">99.5</option>
+                        <option value="10110">101.1</option>
+                        <option value="10190">101.9</option>
+                        <option value="10230">102.3</option>
+                        <option value="10350">103.5</option>
+                        <option value="10430">104.3</option>
+                        
+                    </select>
+                    <label for="tuner1">Tuner1</label>
+                
+                    <select id="tuner2" name="tuner2"  onChange="tune('R2',value);">
+                        <option value="9630">96.3</option>
+                        <option value="9950">99.5</option>
+                        <option value="10110">101.1</option>
+                        <option value="10190">101.9</option>
+                        <option value="10230">102.3</option>
+                        <option value="10350">103.5</option>
+                         <option value="10430">104.3</option>
+                        
+                    </select>
+                    <label for="tuner2">Tuner2</label>
+                </div>
+                
+                <div >
+                    <select id="page" name="page"  onChange="page(value);">
+                        <option value="0">Off</option>
+                        <option value="1">On</option>
+                    </select>
+                    <label for="page">DoorBell</label>
+                    
+                   
+                    <button id="sysOff" name="sysOff"  onclick="sysOff()">ALL OFF</button>
+               
+                </div>
+    </body>
+
+</html>
